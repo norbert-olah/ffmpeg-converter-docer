@@ -1,0 +1,21 @@
+services:
+  ffmpeg-converter:
+    build: .
+    container_name: ffmpeg-converter
+    environment:
+      - SSH_USER=${SSH_USER}
+      - SSH_PASSWORD=${SSH_PASSWORD}
+    ports:
+      - "${SSH_PORT}:22"         # SSH
+      - "${SMB_PORT_139}:139"    # SMB
+      - "${SMB_PORT_445}:445"    # SMB
+    volumes:
+      - ./input:/shares/ConverterInput
+      - ./output:/shares/ConverterOutput
+    restart: unless-stopped
+    networks:
+      - converter-network
+
+networks:
+  converter-network:
+    driver: bridge
