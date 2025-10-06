@@ -60,6 +60,7 @@ ffmpeg -y -i /shares/ConverterInput/input.mp4 -c:v libx265 -crf 28 -preset fast 
 ```bash
 ffmpeg -y -hwaccel cuda -hwaccel_output_format cuda -i /shares/ConverterInput/input.mp4 -c:v hevc_nvenc -preset p5 -c:a copy /shares/ConverterOutput/test_hevc_nvenc.mp4
 ```
+(this didn't work for me. no time to troubleshoot right now)
 
 ### If GPU support is missing
 - For NVIDIA you need an ffmpeg build compiled with --enable-nvenc. Alpine’s stock ffmpeg may not include it; consider using a base image from nvcr.io/nvidia/ffmpeg or building ffmpeg yourself with the right flags.

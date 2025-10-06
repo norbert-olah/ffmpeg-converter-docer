@@ -1,5 +1,8 @@
 # FFmpeg Converter Docker Container
 
+>__disclaimer__: Scripts in this project are generated with the help of AI (GitHub Copilot). Please review and test them thoroughly before using in production.
+
+
 A minimal Docker container based on Alpine Linux with ffmpeg, ffprobe, SMB shares, and SSH access.
 
 ## Features
