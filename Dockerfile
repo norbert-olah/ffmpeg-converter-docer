@@ -22,9 +22,12 @@ RUN mkdir -p /shares/ConverterInput /shares/ConverterOutput
 
 # Configure SSH
 RUN ssh-keygen -A && \
-    sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config && \
-    sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin no/' /etc/ssh/sshd_config && \
-    sed -i 's/AllowTcpForwarding no/AllowTcpForwarding yes/' /etc/ssh/sshd_config
+    echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config && \
+    echo "PermitRootLogin no" >> /etc/ssh/sshd_config && \
+    echo "PermitEmptyPasswords no" >> /etc/ssh/sshd_config && \
+    echo "ChallengeResponseAuthentication yes" >> /etc/ssh/sshd_config && \
+    echo "KbdInteractiveAuthentication yes" >> /etc/ssh/sshd_config && \
+    echo "PubkeyAuthentication yes" >> /etc/ssh/sshd_config
 
 # Configure Samba
 RUN echo "[global]" > /etc/samba/smb.conf && \

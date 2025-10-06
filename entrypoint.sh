@@ -10,8 +10,16 @@ if ! id -u ${SSH_USER} > /dev/null 2>&1; then
     adduser -D -u ${PUID} -G users -s /bin/bash ${SSH_USER}
 fi
 
+# Ensure home directory exists with correct permissions
+mkdir -p /home/${SSH_USER}
+chown -R ${SSH_USER}:users /home/${SSH_USER}
+chmod 755 /home/${SSH_USER}
+
 # Set user password
 echo "${SSH_USER}:${SSH_PASSWORD}" | chpasswd
+
+# Unlock the account (Alpine sometimes locks it by default)
+passwd -u ${SSH_USER} 2>/dev/null || true
 
 # Set Samba password
 (echo "${SSH_PASSWORD}"; echo "${SSH_PASSWORD}") | smbpasswd -a -s ${SSH_USER}

@@ -7,14 +7,18 @@ services:
       - SSH_PASSWORD=${SSH_PASSWORD}
     ports:
       - "${SSH_PORT}:22"         # SSH
-      - "${SMB_PORT_139}:139"    # SMB
-      - "${SMB_PORT_445}:445"    # SMB
+      - "${SMB_PORT_139}:139"    # SMB port 139
+      - "${SMB_PORT_445}:445"    # SMB port 445
+      
     volumes:
       - ./input:/shares/ConverterInput
       - ./output:/shares/ConverterOutput
     restart: unless-stopped
     networks:
       - converter-network
+
+    gpus: all 
+    # Enable all GPUs (NVIDIA Docker runtime must be installed - Windows+Docker Desktop supports this natively, on linux you may need to install the NVIDIA Container Toolkit: https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html)
 
 networks:
   converter-network:
